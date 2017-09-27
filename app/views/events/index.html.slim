@@ -1,0 +1,34 @@
+h1 Listing events
+
+= link_to 'My Profile', user_path(current_user.id)
+
+- if @day_events
+  table
+    thead
+      tr
+        th Name
+        th Description
+        th Frequency
+        th Start date
+        th Finish date
+        th
+        th
+        th
+
+    tbody
+      - @day_events.each do |event|
+        tr
+          td = event.name
+          td = event.description
+          td = event.frequency
+          td = event.start_date
+          td = event.finish_date
+          td = link_to 'Show', event
+          td = link_to 'Edit', edit_event_path(event)
+          td = link_to 'Destroy', event, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+== render "calendar"
+
+= link_to 'New Event', new_event_path

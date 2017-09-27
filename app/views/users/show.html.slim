@@ -1,0 +1,9 @@
+h1 Profile
+
+h2 #{current_user.full_name}
+p #{current_user.email}
+p Events: #{current_user.events.length}
+
+= link_to "Edit my profile", edit_user_registration_path(current_user)
+br
+= link_to "My Calendar", events_path(current_user.id)

@@ -1,0 +1,21 @@
+table 
+  tr
+    td
+    = link_to "<<", events_path(date: @date - 1.month)  
+    td
+    = Date::MONTHNAMES[@date.month] + " " + @date.year.to_s
+    td
+    = link_to ">>", events_path(date: @date + 1.month)  
+	tr
+		- %w(Mon Tue Wed Thu Fri Sun Sat).each do |day|
+			th
+				= day							
+	- @calendar.each_slice(7).each do |week|
+		tr	
+			- week.each do |day|
+				td
+					= day.first.day
+					br
+					= link_to day.last ? day.last.size : 0, events_path(day: day.first, date: @date)
+
+

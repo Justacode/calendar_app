@@ -3,7 +3,7 @@ h1 Listing events
 = link_to 'My Profile', user_path(current_user.id)
 
 - if @day_events
-  table
+  table.days
     thead
       tr
         th Name
@@ -21,8 +21,8 @@ h1 Listing events
           td = event.name
           td = event.description
           td = event.frequency
-          td = event.start_date
-          td = event.finish_date
+          td = event.start_date.strftime("%Y-%B-%d, %H:%M")
+          td = event.finish_date.strftime("%Y-%B-%d, %H:%M")
           td = link_to 'Show', event
           td = link_to 'Edit', edit_event_path(event)
           td = link_to 'Destroy', event, data: { confirm: 'Are you sure?' }, method: :delete

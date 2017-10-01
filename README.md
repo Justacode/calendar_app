@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # README
 
 This README would normally document whatever steps are necessary to get the
@@ -22,3 +23,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+=======
+# calendar_app
+A test task for Flatstack internship
+>>>>>>> 4bf31bfefe92b192a35db9a7fe3aac28505ecf8f

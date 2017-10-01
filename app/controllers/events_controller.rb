@@ -18,6 +18,11 @@ class EventsController < ApplicationController
 
   def new
     @event = current_user.events.build
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def edit
@@ -25,7 +30,8 @@ class EventsController < ApplicationController
 
   def create
     @event = current_user.events.new(event_params)
-    @event.finish_date = @event.start_date if @event.frequency == "once"
+
+    @event.finish_date = set_finish_date
 
     if @event.save
       flash[:success] = "Event successfully created"
@@ -59,6 +65,16 @@ class EventsController < ApplicationController
 
   def set_event
     @event = Event.find(params[:id])
+  end
+
+  def set_finish_date
+    if @event.frequency == "once"
+      @event.start_date
+    elsif params[:forever]
+      nil
+    else
+      @event.finish_date
+    end
   end
 
   def event_params

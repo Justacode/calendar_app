@@ -19,6 +19,9 @@
     = f.label :start_date
     = f.datetime_select :start_date
   .field
+    = label_tag "Forever"
+    = check_box_tag :forever, id: "forever"
+  .field
     = f.label :finish_date
-    = f.datetime_select :finish_date
+    = f.datetime_select :finish_date, id: "finish_date"
   .actions = f.submit

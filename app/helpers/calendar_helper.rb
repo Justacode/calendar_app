@@ -6,7 +6,7 @@ module CalendarHelper
     dates = Hash[(first_date..second_date).to_a.map{ |key| [key] }]
 
     events = Event.by_range(first_date, second_date)
-
+    p events
     construct_calendar(dates, events)
   end
 
@@ -50,7 +50,7 @@ module CalendarHelper
   end
 
   def finish(event, dates)
-    finish = event.finish_date < dates.keys.last ? event.finish_date : dates.keys.last
+    finish = event.finish_date && event.finish_date < dates.keys.last ? event.finish_date : dates.keys.last
     finish.to_date
   end
 

@@ -1,5 +1,4 @@
 class EventsController < ApplicationController
-  include CalendarHelper
   include EventsHelper
 
   before_action :set_event, only: [:show, :edit, :update, :destroy]
@@ -9,7 +8,7 @@ class EventsController < ApplicationController
     @events = set_events
 
     unless params[:tag] || params[:all]
-      @calendar = create_calendar
+      @calendar = CalendarService.new(@date).create_calendar
       @events = day_events
     end
   end
@@ -27,7 +26,6 @@ class EventsController < ApplicationController
   def create
     @event = current_user.events.new(event_params)
 
-    puts params[:time].to_s
     @event.start_date = set_date_with_time
     @event.finish_date = set_finish_date
 
@@ -53,10 +51,7 @@ class EventsController < ApplicationController
 
   def destroy
     @event.destroy
-    respond_to do |format|
-      format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to events_url, notice: 'Event was successfully destroyed.'
   end
 
   private
@@ -70,8 +65,6 @@ class EventsController < ApplicationController
       current_user.events
     elsif params[:tag]
       Event.by_tag_name(params[:tag])
-    else
-      current_user.events
     end
   end
 

@@ -16,9 +16,11 @@
       <div class="top-bar-left">
         <ul class="dropdown menu" data-dropdown-menu>
           <li class="menu-text">Calendar</li>
+          <% if user_signed_in? %>
           <li><%= link_to 'My Profile', user_path(current_user.id)%></li>
           <li><%= link_to 'My Calendar', events_path(current_user)%></li>
           <li><%= link_to 'All Events', events_path(all: true)%></li>
+          <% end %>
         </ul>
       </div>
       <div class="top-bar-right">

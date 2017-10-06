@@ -2,10 +2,12 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+console.log('hello')
+
 $('#forever').change ->
   ischecked = $(this).is(':checked')
   if ischecked
-    $('#finish_date').fadeOut 200
+    $('#finish_date').Visible = False
   else
-  	$('#finish_date').fadeIn 200
+  	$('#finish_date').Visible = True
   return

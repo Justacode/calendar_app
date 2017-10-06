@@ -5,12 +5,13 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
   def index
-    @events = current_user.events
     @date = params[:date] ? params[:date].to_date: Date.current
+    @events = set_events
 
-    @calendar = create_calendar
-
-    @day_events = day_events
+    unless params[:tag] || params[:all]
+      @calendar = create_calendar
+      @events = day_events
+    end
   end
 
   def show
@@ -18,11 +19,6 @@ class EventsController < ApplicationController
 
   def new
     @event = current_user.events.build
-
-    respond_to do |format|
-      format.html
-      format.js
-    end
   end
 
   def edit
@@ -31,6 +27,8 @@ class EventsController < ApplicationController
   def create
     @event = current_user.events.new(event_params)
 
+    puts params[:time].to_s
+    @event.start_date = set_date_with_time
     @event.finish_date = set_finish_date
 
     if @event.save
@@ -67,6 +65,21 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
   end
 
+  def set_events
+    if params[:all]
+      current_user.events
+    elsif params[:tag]
+      Event.by_tag_name(params[:tag])
+    else
+      current_user.events
+    end
+  end
+
+  def set_date_with_time
+    time = params[:time].to_s.split(":")
+    @event.start_date.change(hour: time.first, min: time.last)
+  end
+
   def set_finish_date
     if @event.frequency == "once"
       @event.start_date
@@ -78,6 +91,6 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    params.require(:event).permit(:name, :description, :frequency, :user_id, :start_date, :finish_date)
+    params.require(:event).permit(:name, :description, :frequency, :user_id, :start_date, :finish_date, :tags)
   end
 end

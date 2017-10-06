@@ -25,7 +25,7 @@ module CalendarHelper
 
   def add_weekly(event, dates)
     (start(event, dates)..finish(event, dates)).each do |d|
-      insert(dates, d, event) if d.wday == event.start_date.wday
+      insert(dates, d, event) if d.wday == event.start_date.wday 
     end
   end
 

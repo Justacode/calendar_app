@@ -3,11 +3,10 @@ Rails.application.routes.draw do
 
   root 'users#show'
 
-  resources :events
-  resources :users, path: 'users', only: [:show]
+  resources :users, only:[:show] do
+    member do
+      resources :events
+    end
+  end
   
-  get 'users/:id' => 'users#show'
-
-
-
 end

@@ -1,8 +1,15 @@
 h1 Listing events
 
-= link_to 'My Profile', user_path(current_user.id)
+br
+-unless params[:tag] || params[:all]
+  == render "calendar"
 
-- if @day_events
+br
+
+-if @events
+  -if params[:tag]
+    h3
+      = "Events by tag '#{params[:tag]}':" 
   table.days
     thead
       tr
@@ -11,24 +18,28 @@ h1 Listing events
         th Frequency
         th Start date
         th Finish date
+        th Tags
         th
         th
         th
 
     tbody
-      - @day_events.each do |event|
+      - @events.each do |event|
         tr
           td = event.name
           td = event.description
           td = event.frequency
           td = event.start_date.strftime("%Y-%B-%d, %H:%M")
           td = event.finish_date ? event.finish_date.strftime("%Y-%B-%d, %H:%M") : "NO"
+          td
+            - if event.tags.empty?  
+              = "No tags"
+            - else
+              - event.tags.to_a.each do |tag|
+                = link_to tag.name , events_path(tag: tag.name)
+                br         
           td = link_to 'Show', event
           td = link_to 'Edit', edit_event_path(event)
           td = link_to 'Destroy', event, data: { confirm: 'Are you sure?' }, method: :delete
-
-br
-
-== render "calendar"
 
 = link_to 'New Event', new_event_path

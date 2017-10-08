@@ -24,9 +24,7 @@ group :development, :test do
 end
 
 group :development do
-  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem "awesome_print", require:"ap"
-  gem 'web-console', '>= 3.3.0'
+  gem 'sunspot_solr'
   gem 'listen', '~> 3.0.5'
   gem 'spring'
   gem 'better_errors'

@@ -1,9 +1,14 @@
 class Event < ApplicationRecord
+  searchable do
+    text :name, :default_boost => 2
+    text :description
+  end
+
   belongs_to :user
   has_many :taggings
   has_many :tags, through: :taggings
 
-  validates :name, presence: true, length: {minimum: 5, maximum: 128}
+  validates :name, presence: true, length: {minimum: 5, maximum: 64}
   validates :frequency, inclusion: { in: %w(once dayly weekly monthly yearly)}
   validates :start_date, presence: true
   validate :start_date_cannot_be_later_than_finish_date
@@ -14,12 +19,12 @@ class Event < ApplicationRecord
                {fd: finish_date, sd: start_date}).order(:start_date).to_a
   end
 
-  def tags=(tags)
-    super tags.split(",").map { |tag| Tag.find_or_create_by(name: tag.strip) } unless tags.empty?
-  end
-
   def self.by_tag_name(tag_name)
     Tag.find_by(name: tag_name).events
+  end
+
+  def tags=(tags)
+    super tags.split(",").map { |tag| Tag.find_or_create_by(name: tag.strip) } unless tags.empty?
   end
 
   private

@@ -1,5 +1,4 @@
 class EventsController < ApplicationController
-  include EventsHelper
 
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
@@ -7,7 +6,7 @@ class EventsController < ApplicationController
     @date = params[:date] ? params[:date].to_date: Date.current
     @events = set_events
 
-    unless params[:tag] || params[:all]
+    unless params[:tag] || params[:all] || params[:search]
       @calendar = CalendarService.new(@date).create_calendar
       @events = day_events
     end
@@ -25,13 +24,11 @@ class EventsController < ApplicationController
 
   def create
     @event = current_user.events.new(event_params)
-
     @event.start_date = set_date_with_time
     @event.finish_date = set_finish_date
 
     if @event.save
-      flash[:success] = "Event successfully created"
-      redirect_to events_path
+      redirect_to events_path, notice: "Event successfully created"
     else
       render :new
     end
@@ -40,11 +37,9 @@ class EventsController < ApplicationController
   def update
     respond_to do |format|
       if @event.update(event_params)
-        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
-        format.json { render :show, status: :ok, location: @event }
+        redirect_to @event, notice: 'Event was successfully updated.'
       else
-        format.html { render :edit }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
+        render :edit
       end
     end
   end
@@ -65,6 +60,8 @@ class EventsController < ApplicationController
       current_user.events
     elsif params[:tag]
       Event.by_tag_name(params[:tag])
+    elsif params[:search]
+      SearchService.new.fetch_events(params[:search])
     end
   end
 
@@ -81,6 +78,11 @@ class EventsController < ApplicationController
     else
       @event.finish_date
     end
+  end
+
+  def day_events
+    date = params[:day] ? params[:day].to_date : @date
+    @calendar[date] unless @date == params[:date]
   end
 
   def event_params

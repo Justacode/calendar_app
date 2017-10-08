@@ -1,33 +1,35 @@
-= form_for @event do |f|
-  - if @event.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@event.errors.count, "error")} prohibited this event from being saved:"
-      ul
-        - @event.errors.full_messages.each do |message|
-          li = message
+.event-form
+  = form_for @event do |f|
+    - if @event.errors.any?
+      #error_explanation
+        h2 = "#{pluralize(@event.errors.count, "error")} prohibited this event from being saved:"
+        ul
+          - @event.errors.full_messages.each do |message|
+            li = message
 
-  .field
-    = f.label :name
-    = f.text_field :name, class: "form-control"
-  .field
-    = f.label :description
-    = f.text_area :description, class: "form-control"
-  .field
-    = f.label :frequency
-    = f.select :frequency, options_for_select(['once', 'dayly', 'weekly', 'monthly', 'yearly'])
-  .field
-    = f.label :start_date
-    = f.date_field :start_date, class: "form-control", value: Date.today.strftime("%Y-%m-%d")
-  .field
-    = label_tag "Forever"
-    = check_box_tag :forever, id: "forever", class: "form-control"
-  .field
-    = f.label :finish_date
-    = f.date_field :finish_date, id: "finish_date", class: "form-control", value: Date.today.strftime("%Y-%m-%d")  
-  .field
-    = label_tag "Time"
-    = time_field_tag :time, class: "form-control"
-  .field
-    = f.label :tags
-    = f.text_field :tags, value: ""
-  .actions = f.submit
+    .field
+      = f.label :name
+      = f.text_field :name, class: "form-control"
+    .field
+      = f.label :description
+      = f.text_area :description, class: "form-control"
+    .field
+      = f.label :frequency
+      = f.select :frequency, options_for_select(['once', 'dayly', 'weekly', 'monthly', 'yearly'])
+    .field
+      = f.label :start_date
+      = f.date_field :start_date, class: "form-control", value: Date.today.strftime("%Y-%m-%d")
+    .finish-date-params  
+      .field
+        = label_tag "Forever"
+        = check_box_tag :forever, id: "forever", class: "form-control"
+      .field.finish_date
+        = f.label :finish_date
+        = f.date_field :finish_date, class: "form-control", value: Date.today.strftime("%Y-%m-%d")  
+    .field
+      = label_tag "Time"
+      = time_field_tag :time, class: "form-control"
+    .field
+      = f.label :tags
+      = f.text_field :tags, value: ""
+    .actions = f.submit

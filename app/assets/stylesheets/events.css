@@ -1,0 +1,58 @@
+// Place all the styles related to the Events controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+a {
+	text-decoration: none;
+}
+
+.title {
+	text-align: center;
+	font-size: 60px;
+}
+
+.calendar {
+	float: right;
+}
+
+.calendar table {
+	height: 500px;
+	width: 600px;
+}
+
+.mday-num {
+	font-size: 25px;
+}
+
+.calendar h3 {
+	text-align: center;
+}
+
+.current-month{
+	text-align: center;
+	font-size: 40px
+}
+
+.events{
+	float: left;
+	text-align: center;
+  height: 600px;
+  overflow: scroll;
+}
+
+.events table {
+	width: 600px;
+}
+
+.event-name {
+	text-align: center;
+	font-size: 30px;
+}
+
+.event-form {
+	width: 500px;
+}
+
+.finish-date-params {
+	display: none;
+}

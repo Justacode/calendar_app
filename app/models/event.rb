@@ -1,10 +1,4 @@
 class Event < ApplicationRecord
-  searchable do
-    integer :user_id
-    text :name, :default_boost => 2
-    text :description
-  end
-
   belongs_to :user
   has_many :taggings
   has_many :tags, through: :taggings
@@ -22,6 +16,10 @@ class Event < ApplicationRecord
 
   def self.by_tag_name(tag_name, user)
     Tag.find_by(name: tag_name).events.where(user_id: user)
+  end
+
+  def self.search(search)
+    where("lower(name) LIKE lower(:s) or lower(description) LIKE lower(:s)", {s: "%#{search}%"})
   end
 
   def tags=(tags)

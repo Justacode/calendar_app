@@ -16,15 +16,12 @@ gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem "slim-rails"
-gem 'sunspot_rails'
 
 group :development, :test do
   gem 'byebug', platform: :mri
-  gem 'sqlite3'
 end
 
 group :production do
-	gem 'sunspot_solr'
 	gem 'pg'
 end	
 

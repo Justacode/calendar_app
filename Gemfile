@@ -24,11 +24,11 @@ group :development, :test do
 end
 
 group :production do
+	gem 'sunspot_solr'
 	gem 'pg'
 end	
 
 group :development do
-  gem 'sunspot_solr'
   gem 'listen', '~> 3.0.5'
   gem 'spring'
   gem 'better_errors'

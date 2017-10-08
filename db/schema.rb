@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20171005165628) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "events", force: :cascade do |t|
     t.string   "name",        default: "",     null: false
     t.text     "description"
@@ -21,7 +24,7 @@ ActiveRecord::Schema.define(version: 20171005165628) do
     t.datetime "finish_date"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
-    t.index ["user_id"], name: "index_events_on_user_id"
+    t.index ["user_id"], name: "index_events_on_user_id", using: :btree
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -29,15 +32,15 @@ ActiveRecord::Schema.define(version: 20171005165628) do
     t.integer  "tag_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["event_id"], name: "index_taggings_on_event_id"
-    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["event_id"], name: "index_taggings_on_event_id", using: :btree
+    t.index ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
   end
 
   create_table "tags", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_tags_on_name"
+    t.index ["name"], name: "index_tags_on_name", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -54,8 +57,11 @@ ActiveRecord::Schema.define(version: 20171005165628) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "full_name"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "events", "users"
+  add_foreign_key "taggings", "events"
+  add_foreign_key "taggings", "tags"
 end

@@ -3,4 +3,3 @@ class AddFullNameToUsers < ActiveRecord::Migration[5.0]
     add_column :users, :full_name, :string
   end
 end
-w

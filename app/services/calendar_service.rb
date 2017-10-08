@@ -1,10 +1,10 @@
 class CalendarService
 
-  def initialize(date)
+  def initialize(date, user)
     first_date = date.beginning_of_month.beginning_of_week
     second_date = date.end_of_month.end_of_week
     @dates = Hash[(first_date..second_date).to_a.map{ |key| [key] }]
-    @events = Event.by_range(first_date, second_date)
+    @events = user.events.by_range(first_date, second_date)
   end
 
   def create_calendar

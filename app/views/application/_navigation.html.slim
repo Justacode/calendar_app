@@ -1,16 +1,26 @@
 .top-bar
-  .top-bar-left
-    ul.dropdown.menu data-dropdown-menu="" 
-      li.menu-text.site-title
-        | Calendar
-      li
-        = link_to 'My Profile', user_path(current_user)
-      li
-        = link_to 'My Calendar', events_path(current_user)
-      li
-        = link_to 'All Events', events_path(id: current_user.id, all: true)
-  .top-bar-right
-    ul.menu
-      = form_tag events_path(current_user), method: :get
-        = text_field_tag :search, params[:search], placeholder: "Search", maxlength: "20"
-        = submit_tag "Search", :name => nil, class: "button"
+  - if user_signed_in?
+    .top-bar-left
+      ul.dropdown.menu data-dropdown-menu="" 
+        li.menu-text.site-title
+          | Calendar
+        li
+          = link_to 'My Profile', user_path(current_user)
+        li
+          = link_to 'My Calendar', events_path(current_user)
+        li
+          = link_to 'All Events', events_path(id: current_user.id, all: true)
+        li  = link_to "Sign out", destroy_user_session_path, method: :delete  
+    .top-bar-right
+        = form_tag events_path(current_user), method: :get
+          .row.collapse
+            .large-8.small-9.columns
+              = text_field_tag :search, params[:search], placeholder: "Search", maxlength: "20"
+            .large-4.small-3.columns  
+              = submit_tag "Search", :name => nil, class: "button"    
+  - else
+    .right 
+      ul.dropdown.menu data-dropdown-menu="" 
+        li = link_to 'Sign up', new_user_registration_path
+        li = link_to 'Log in', new_user_session_path
+            

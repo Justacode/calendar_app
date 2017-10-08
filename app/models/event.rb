@@ -1,5 +1,6 @@
 class Event < ApplicationRecord
   searchable do
+    integer :user_id
     text :name, :default_boost => 2
     text :description
   end
@@ -19,8 +20,8 @@ class Event < ApplicationRecord
       AND frequency = 'yearly')", {fd: finish_date, sd: start_date}).order(:start_date).to_a
   end
 
-  def self.by_tag_name(tag_name)
-    Tag.find_by(name: tag_name).events
+  def self.by_tag_name(tag_name, user)
+    Tag.find_by(name: tag_name).events.where(user_id: user)
   end
 
   def tags=(tags)

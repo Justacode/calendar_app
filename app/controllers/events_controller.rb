@@ -4,8 +4,7 @@ class EventsController < ApplicationController
 
   def index
     @date = params[:date] ? params[:date].to_date: Date.current
-    @calendar = CalendarService.new(@date).create_calendar
-    p @calendar
+    @calendar = CalendarService.new(@date, current_user).create_calendar
     @events = set_events
   end
 
@@ -54,9 +53,9 @@ class EventsController < ApplicationController
     if params[:all]
       current_user.events
     elsif params[:tag]
-      Event.by_tag_name(params[:tag])
+      current_user.events.by_tag_name(params[:tag], current_user)
     elsif params[:search]
-      SearchService.new.fetch_events(params[:search])
+      SearchService.new(current_user).fetch_events(params[:search])
     else
       date = params[:day] ? params[:day].to_date : @date
       @calendar[date] unless @date == params[:date]

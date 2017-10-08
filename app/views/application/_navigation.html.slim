@@ -11,8 +11,6 @@
         = link_to 'All Events', events_path(id: current_user.id, all: true)
   .top-bar-right
     ul.menu
-      li
-        = form_tag events_path(current_user), method: :get
-          = text_field_tag :search, params[:search], placeholder: "Search"
-      li
-        button.button type="button"  Search
+      = form_tag events_path(current_user), method: :get
+        = text_field_tag :search, params[:search], placeholder: "Search", maxlength: "20"
+        = submit_tag "Search", :name => nil, class: "button"

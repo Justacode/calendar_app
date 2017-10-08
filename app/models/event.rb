@@ -15,8 +15,8 @@ class Event < ApplicationRecord
 
   def self.by_range (start_date, finish_date)
     self.where("(start_date <= :fd AND (finish_date >= :sd OR finish_date IS NULL) AND frequency != 'yearly')
-      OR (((start_date BETWEEN :sd AND :fd) OR (finish_date BETWEEN :sd AND :fd)) AND frequency = 'yearly')",
-               {fd: finish_date, sd: start_date}).order(:start_date).to_a
+      OR (((start_date BETWEEN :sd AND :fd) OR (finish_date BETWEEN :sd AND :fd) OR finish_date IS NULL) 
+      AND frequency = 'yearly')", {fd: finish_date, sd: start_date}).order(:start_date).to_a
   end
 
   def self.by_tag_name(tag_name)

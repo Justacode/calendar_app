@@ -1,7 +1,15 @@
-h1 Profile
+h1 align="center" 
+	| Profile
 
-h2 #{current_user.full_name}
-p #{current_user.email}
-p Events: #{current_user.events.length}
+.profile
+	p 
+		b Name: 
+		| #{current_user.full_name}
+	p 
+		b Email: 
+		| #{current_user.email}
+	p 
+		b Number of events: 
+		| #{current_user.events.length}
 
-= link_to "Edit my profile", edit_user_registration_path(current_user)
+	= button_to "Edit my profile", edit_user_registration_path(current_user), class: "button", method: :get

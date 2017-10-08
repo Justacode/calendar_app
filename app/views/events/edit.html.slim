@@ -1,8 +1,9 @@
-h1 Editing event
+h1.title Editing event
 
 == render 'form'
 
-= link_to 'Show', @event
-'  |
-= link_to 'Back', events_path
+
+ul.button-group
+	li = button_to 'Show', @event, class: "button", method: :get
+	li = button_to 'Back', :back, class: "button", method: :get
 

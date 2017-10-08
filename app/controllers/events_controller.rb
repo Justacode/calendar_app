@@ -4,12 +4,9 @@ class EventsController < ApplicationController
 
   def index
     @date = params[:date] ? params[:date].to_date: Date.current
+    @calendar = CalendarService.new(@date).create_calendar
+    p @calendar
     @events = set_events
-
-    unless params[:tag] || params[:all] || params[:search]
-      @calendar = CalendarService.new(@date).create_calendar
-      @events = day_events
-    end
   end
 
   def show
@@ -35,12 +32,10 @@ class EventsController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @event.update(event_params)
-        redirect_to @event, notice: 'Event was successfully updated.'
-      else
-        render :edit
-      end
+    if @event.update(event_params)
+      redirect_to @event, notice: 'Event was successfully updated.'
+    else
+      render :edit
     end
   end
 
@@ -62,6 +57,9 @@ class EventsController < ApplicationController
       Event.by_tag_name(params[:tag])
     elsif params[:search]
       SearchService.new.fetch_events(params[:search])
+    else
+      date = params[:day] ? params[:day].to_date : @date
+      @calendar[date] unless @date == params[:date]
     end
   end
 
@@ -78,11 +76,6 @@ class EventsController < ApplicationController
     else
       @event.finish_date
     end
-  end
-
-  def day_events
-    date = params[:day] ? params[:day].to_date : @date
-    @calendar[date] unless @date == params[:date]
   end
 
   def event_params

@@ -33,10 +33,9 @@ class CalendarService
   end
 
   def add_yearly(event)
-    date = @dates.keys.bsearch do |date|
-      date.month == event.start_date.month && date.day == event.start_date.day
+    @dates.keys.each do |date|
+      insert(date, event) if date.month == event.start_date.month && date.day == event.start_date.day
     end
-    insert(date, event)
   end
 
   def start(event)

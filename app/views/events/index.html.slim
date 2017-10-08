@@ -1,52 +1,59 @@
 h1.title 
   |Events
 
-= link_to 'New Event', new_event_path  
+.new-event
+  = button_to 'New Event', new_event_path, class: "button", method: :get  
 
-br
--unless params[:tag] || params[:all] || params[:search]
+.container
+  br
   == render "calendar"
 
-br
+  br
 
--if @events
-  -if params[:tag]
-    h3
-      = "Events by tag '#{params[:tag]}':"
-  -elsif params[:search]
-    h3
-      = "Events by '#{params[:search]}'"
-  .events
-    - @events.each do |event|           
-      table
-        thead
-          tr
-            th.event-name colspan="4" = event.name
-          tr
-            th Frequency
-            th Start date
-            th Finish date
-            th Tags
-        tbody
+  -if @events
+    .event-notice
+      -if params[:tag]
+        h4
+          = "Events by tag '#{params[:tag]}':"
+      -elsif params[:search]
+        h4
+          = "Events by '#{params[:search]}':"
+      -elsif params[:all]
+        h4
+          = "All your events:"
+    .events        
+      - @events.each do |event|           
+        table
+          thead
             tr
-              td = event.frequency
-              td = event.start_date.strftime("%Y-%B-%d, %H:%M")
-              td = event.finish_date ? event.finish_date.strftime("%Y-%B-%d, %H:%M") : "NO"
-              td
-                - if event.tags.empty?  
-                  = "No tags"
-                - else
-                  - event.tags.to_a.each do |tag|
-                    = link_to tag.name , events_path(tag: tag.name)
-                    br         
+              th.event-name colspan="4" = event.name
             tr
-              th colspan="4" Description
-            tr 
-              td = event.description
-            tr
-              td.btns colspan="4"
-                ul.button-group
-                  li = button_to 'Show', event, method: :get, class: "button" 
-                  li = button_to 'Edit', edit_event_path(event), method: :get, class: "button" 
-                  li = button_to 'Destroy', event, data: { confirm: 'Are you sure?' }, method: :delete, class: "button" 
+              th Frequency
+              th Start date
+              th Finish date
+              th Tags
+          tbody
+              tr
+                td = event.frequency
+                td = event.start_date.strftime("%Y-%B-%d, %H:%M")
+                td = event.finish_date ? event.finish_date.strftime("%Y-%B-%d, %H:%M") : "NO"
+                td
+                  - if event.tags.empty?  
+                    = "No tags"
+                  - else
+                    - event.tags.to_a.each do |tag|
+                      = link_to tag.name , events_path(tag: tag.name)
+                      br         
+              tr
+                th colspan="4" Description
+              tr 
+                td colspan="4" 
+                  = truncate(event.description, length: 50)
+              tr
+                td colspan="4"
+                  ul.button-group.even-3
+                    li = button_to 'Show', event, method: :get, class: "button" 
+                    li = button_to 'Edit', edit_event_path(event), method: :get, class: "button" 
+                    li = button_to 'Destroy', event, data: { confirm: 'Are you sure?' }, method: :delete, class: "button" 
+
 

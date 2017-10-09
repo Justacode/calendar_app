@@ -2,8 +2,6 @@ h1.title Editing event
 
 == render 'form'
 
-
-ul.button-group
-	li = button_to 'Show', @event, class: "button", method: :get
-	li = button_to 'Back', :back, class: "button", method: :get
+div align="center"
+	= button_to 'Back', events_path, class: "button", method: :get
 

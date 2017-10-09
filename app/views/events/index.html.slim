@@ -3,15 +3,14 @@ h1.title
 
 .new-event
   = button_to 'New Event', new_event_path, class: "button", method: :get  
-
+  p#notice = notice  
 .container
   br
   == render "calendar"
 
   br
 
-  -if @events
-    .event-notice
+  .event-notice
       -if params[:tag]
         h4
           = "Events by tag '#{params[:tag]}':"
@@ -21,6 +20,7 @@ h1.title
       -elsif params[:all]
         h4
           = "All your events:"
+  -if @events
     .events        
       - @events.each do |event|           
         table
@@ -51,9 +51,9 @@ h1.title
                   = truncate(event.description, length: 50)
               tr
                 td colspan="4"
-                  ul.button-group.even-3
-                    li = button_to 'Show', event, method: :get, class: "button" 
-                    li = button_to 'Edit', edit_event_path(event), method: :get, class: "button" 
-                    li = button_to 'Destroy', event, data: { confirm: 'Are you sure?' }, method: :delete, class: "button" 
+                  .button-group.buttons
+                    = button_to 'Show', event, method: :get, class: "button" 
+                    = button_to 'Edit', edit_event_path(event), method: :get, class: "button"
+                    = button_to 'Destroy', event, data: { confirm: 'Are you sure?' }, method: :delete, class: "button" 
 
 

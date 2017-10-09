@@ -1,5 +1,10 @@
 $(document).ready(function() {
 
+  var value = $(this).find("option:selected").attr("value");
+    if (value != "once"){
+      $(".finish-date-params").show();
+    }
+
     $("#event_frequency").change(function(){
   		var value = $(this).find("option:selected").attr("value");
 

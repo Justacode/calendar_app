@@ -18,9 +18,10 @@
           - week.each do |day|
             td
               .mday-num
-                = day.first.day
+                div class=('today' if day.first.to_date == Date.today)
+                  = link_to day.first.day, events_path(day: day.first, date: @date)
               br 
                 |Events: 
-                = link_to day.last ? day.last.size : 0, events_path(day: day.first, date: @date)
+                = day.last ? day.last.size : 0
 
 

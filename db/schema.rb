@@ -62,6 +62,6 @@ ActiveRecord::Schema.define(version: 20171005165628) do
   end
 
   add_foreign_key "events", "users"
-  add_foreign_key "taggings", "events"
-  add_foreign_key "taggings", "tags"
+  add_foreign_key "taggings", "events", on_delete: :cascade
+  add_foreign_key "taggings", "tags", on_delete: :cascade
 end

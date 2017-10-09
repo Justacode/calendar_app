@@ -1,7 +1,7 @@
 class Event < ApplicationRecord
   belongs_to :user
-  has_many :taggings
-  has_many :tags, through: :taggings
+  has_many :taggings, dependent: :delete_all
+  has_many :tags, through: :taggings, dependent: :delete_all
 
   validates :name, presence: true, length: {minimum: 5, maximum: 64}
   validates :frequency, inclusion: { in: %w(once dayly weekly monthly yearly)}

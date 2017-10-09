@@ -16,6 +16,7 @@ a {
 }
 
 .calendar table {
+	margin-top: 18px;
 	height: 500px;
 	width: 600px;
 }
@@ -36,9 +37,10 @@ a {
 .events{
 	float: right;
 	text-align: center;
-  height: 600px;
+  height: 535px;
   width: 600px;
-  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .events table {
@@ -62,8 +64,22 @@ a {
 
 .event-notice {
 	float: right;
+	margin-top: -58px;
 }
 
 .new-event {
 	text-align: center;
+}
+
+.buttons {
+	display: flex;
+	justify-content: center;
+}
+
+.container {
+	position: relative;
+}
+
+.today a{
+	color: red;
 }

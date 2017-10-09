@@ -15,21 +15,24 @@
       = f.text_area :description, class: "form-control"
     .field
       = f.label :frequency
-      = f.select :frequency, options_for_select(['once', 'dayly', 'weekly', 'monthly', 'yearly'])
+      = f.select :frequency, options_for_select(['once', 'dayly', 'weekly', 'monthly', 'yearly'], @event.frequency)
     .field
       = f.label :start_date
       = f.date_field :start_date, class: "form-control", value: Date.today.strftime("%Y-%m-%d")
     .finish-date-params  
       .field
         = label_tag "Forever"
-        = check_box_tag :forever, id: "forever", class: "form-control"
+        = check_box_tag(:forever, value = "true", checked = !@event.finish_date, id: "forever")
       .field.finish_date
         = f.label :finish_date
-        = f.date_field :finish_date, class: "form-control", value: Date.today.strftime("%Y-%m-%d")  
+        = f.date_field :finish_date, class: "form-control", value: (@event.finish_date.strftime("%Y-%m-%d") if @event.finish_date)
     .field
       = label_tag "Time"
-      = time_field_tag :time, class: "form-control"
+      = time_field_tag(:time, value = "#{event_time(@event)}" , class: "form-control")
     .field
       = f.label "Tags (separated by commas)"
-      = f.text_field :tags, value: ""
-    .actions = f.submit
+      = f.text_field :tags, value: (@event.tags ? all_tags(@event) : "")
+    .actions align="center" 
+      = f.submit "Submit", class: "button success"
+
+

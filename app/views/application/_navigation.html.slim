@@ -21,6 +21,8 @@
   - else
     .right 
       ul.dropdown.menu data-dropdown-menu="" 
+        li.menu-text.navbar-header.site-title
+          | Calendar
         li = link_to 'Sign up', new_user_registration_path
         li = link_to 'Log in', new_user_session_path
             

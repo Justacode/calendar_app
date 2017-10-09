@@ -1,29 +1,12 @@
-<<<<<<< HEAD
-# README
+# Calendar App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+2nd test task for Flatstack internship
 
-Things you may want to cover:
+- Users can register with email, password and name via devise gem
+- Registred users can change their email, name and password, destroy their accounts
+- Registred users can view their events in the calendar 
+- Registred users can create new events, edit and destroy them
+- Events can have tags
+- Registered users can search their events by form
 
-* Ruby version
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-=======
-# calendar_app
-A test task for Flatstack internship
->>>>>>> 4bf31bfefe92b192a35db9a7fe3aac28505ecf8f
